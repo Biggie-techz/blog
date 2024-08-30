@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Log in</title>
+    <link rel="stylesheet" href="login.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="spinner" id="loader">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <form class="form" id="form">
+        <p class="title">Log in</p>
+        <p class="message">Sign in now to get full access to our app.</p>
+        <label>
+          <input required type="text" class="input" id="username" />
+          <span id="usernamePlaceholder">Username</span>
+        </label>
+        <label>
+          <input required type="password" class="input" id="password" />
+          <span id="passwordPlaceholder">Password</span>
+        </label>
+        <a class="submit" id="submit">Log in</a>
+        <p class="signup">
+          Don't have an account? <a href="dashboard.html">Sign up</a>
+        </p>
+      </form>
+    </div>
+  </body>
+  <script src="login.js"></script>
+</html>

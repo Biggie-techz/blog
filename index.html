@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="spinner" id="loader">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <form class="form"  id="form">
+        <p class="title">Sign up</p>
+        <p class="message">Register now and get full access to our app.</p>
+        <div class="flex">
+          <label>
+            <input required type="text" class="input" id="firstName" />
+            <span id="firstNamePlaceholder">First Name</span>
+          </label>
+
+          <label>
+            <input required type="text" class="input" id="lastName" />
+            <span id="lastNamePlaceholder">Last Name</span>
+          </label>
+        </div>
+
+        <label>
+          <input required type="text" class="input" id="username" />
+          <span id="usernamePlaceholder">Username</span>
+        </label>
+
+        <label>
+          <input required type="email" class="input" id="email" />
+          <span id="emailPlaceholder">Email</span>
+        </label>
+
+        <label>
+          <input required type="number" class="input" id="phone" />
+          <span id="phonePlaceholder">Phone number</span>
+        </label>
+
+        <label class="passwordLabel">
+          <input required type="password" class="input" id="password" />
+          <span id="passwordPlaceholder">Password</span>
+        </label>
+        <label>
+          <input required type="password" class="input" id="confirmPassword" />
+          <span id="confirmPasswordPlaceholder">Confirm password</span>
+        </label>
+        <a class="submit" id="submit">Sign up</a>
+        <p class="signin">
+          Already have an acount ? <a id="haveAnAccount">Sign in</a>
+        </p>
+      </form>
+    </div>
+  </body>
+  <script src="app.js"></script>
+</html>
