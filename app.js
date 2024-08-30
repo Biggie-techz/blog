@@ -13,7 +13,7 @@ const passwordPlaceholder = document.getElementById("passwordPlaceholder");
 const confirmPassword = document.getElementById("confirmPassword");
 const confirmPasswordPlaceholder = document.getElementById(
   "confirmPasswordPlaceholder"
-);
+); 
 const submit = document.getElementById("submit");
 
 let acctObj = {};

@@ -14,7 +14,7 @@ submit.addEventListener("click", (event) => {
     alert("You have successfully logged in!");
     document.getElementById("form").style.display = "none";
     document.getElementById("loader").style.display = "block";
-
+ 
     setTimeout(() => {
       document.getElementById("form").style.display = "flex";
       document.getElementById("loader").style.display = "none";
