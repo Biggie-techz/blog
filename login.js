@@ -20,6 +20,10 @@ submit.addEventListener("click", (event) => {
 
     setTimeout(() => {
       window.location.href = "dashboard.html";
+      setTimeout(() => {
+        document.getElementById("loader").style.display = "none";
+        document.getElementById("form").style.display = "flex";
+      }, 5000);
     }, 1500);
   } else {
     displayError("Invalid username or password");
@@ -32,7 +36,11 @@ document.getElementById("dontHaveAnAccount").addEventListener("click", () => {
   document.getElementById("loader").style.display = "block";
 
   setTimeout(() => {
-    window.location.href = "index.html";
+    window.location.href = "signup.html";
+    setTimeout(() => {
+      document.getElementById("loader").style.display = "none";
+      document.getElementById("form").style.display = "flex";
+    }, 5000);
   }, 1500);
 });
 
