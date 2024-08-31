@@ -27,8 +27,10 @@ const nameRegex = /^[a-zA-Z-]+$/;
 const usernameRegex = /^[a-zA-Z0-9-_]+$/;
 const phoneRegex = /^[0][7-9][0-1][0-9]{8}$/;
 const emailRegex = /^[a-zA-Z0-9._]+@[a-zA-Z0-9.]+\.[a-zA-Z]{2,4}$/;
-// https://github.com/Demibrun/Sign-Up-page
-const urlRegex = /^https:\/\/[\w\-]+(\.[\w\-]+)+[/#?]?.*$/
+
+// https://github.com/Biggie-Techz/login
+const urlRegex = /^(https:\/\/)([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/[^\s]*)?$/;
+
 const passwordRegex =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.])[A-Za-z\d@$!%*?&.]{8,16}$/;
 
@@ -61,7 +63,7 @@ firstName.addEventListener("input", () => {
     firstNamePlaceholder,
     nameRegex.test(firstName.value),
     "First Name",
-    "Invalid Name Format"
+    "e.g: John"
   );
 });
 
@@ -72,7 +74,7 @@ lastName.addEventListener("input", () => {
     lastNamePlaceholder,
     nameRegex.test(lastName.value),
     "Last Name",
-    "Invalid Name Format"
+    "e.g: Smith"
   );
 });
 
@@ -94,7 +96,7 @@ username.addEventListener("input", () => {
     usernamePlaceholder,
     usernameRegex.test(username.value),
     "Username",
-    "Invalid Username Format"
+    "e.g: John_Smith123"
   );
 });
 
@@ -116,7 +118,7 @@ email.addEventListener("input", () => {
     emailPlaceholder,
     emailRegex.test(email.value),
     "Email",
-    "Invalid Email Format"
+    "e.g: example@yahoo.com"
   );
 });
 
@@ -127,9 +129,9 @@ secureURL.addEventListener("input", () => {
     urlPlaceholder,
     urlRegex.test(secureURL.value),
     "Secure Web URL",
-    "e.g: https://google.com"
+    "e.g: https://john-smith.com"
   );
-})
+});
 
 // Phone validation
 phone.addEventListener("input", () => {
@@ -149,7 +151,7 @@ phone.addEventListener("input", () => {
     phonePlaceholder,
     phoneRegex.test(phone.value),
     "Phone Number",
-    "Invalid Phone Number"
+    "e.g: 08012345678"
   );
 });
 
@@ -216,7 +218,11 @@ submit.addEventListener("click", () => {
     document.getElementById("loader").style.display = "block";
     setTimeout(() => {
       window.location.href = "login.html";
-    }, 1000);
+      setTimeout(() => {
+        document.getElementById("loader").style.display = "none";
+        document.getElementById("form").style.display = "flex";
+      }, 5000);
+    }, 1500);
   } else {
     alert("Please input all fields correctly");
   }
@@ -227,7 +233,11 @@ document.getElementById("haveAnAccount").addEventListener("click", () => {
   document.getElementById("loader").style.display = "block";
   setTimeout(() => {
     window.location.href = "login.html";
-  }, 1000);
+    setTimeout(() => {
+      document.getElementById("loader").style.display = "none";
+      document.getElementById("form").style.display = "flex";
+    }, 5000);
+  }, 1500);
 });
 
 console.log(JSON.parse(localStorage.getItem("account")));
