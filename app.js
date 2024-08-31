@@ -7,6 +7,8 @@ const username = document.getElementById("username");
 const usernamePlaceholder = document.getElementById("usernamePlaceholder");
 const email = document.getElementById("email");
 const emailPlaceholder = document.getElementById("emailPlaceholder");
+const secureURL = document.getElementById("secureURL");
+const urlPlaceholder = document.getElementById("urlPlaceholder");
 const phone = document.getElementById("phone");
 const phonePlaceholder = document.getElementById("phonePlaceholder");
 const password = document.getElementById("password");
@@ -25,6 +27,8 @@ const nameRegex = /^[a-zA-Z-]+$/;
 const usernameRegex = /^[a-zA-Z0-9-_]+$/;
 const phoneRegex = /^[0][7-9][0-1][0-9]{8}$/;
 const emailRegex = /^[a-zA-Z0-9._]+@[a-zA-Z0-9.]+\.[a-zA-Z]{2,4}$/;
+// https://github.com/Demibrun/Sign-Up-page
+const urlRegex = /^https:\/\/[\w\-]+(\.[\w\-]+)+[/#?]?.*$/
 const passwordRegex =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.])[A-Za-z\d@$!%*?&.]{8,16}$/;
 
@@ -115,6 +119,17 @@ email.addEventListener("input", () => {
     "Invalid Email Format"
   );
 });
+
+// URL validation
+secureURL.addEventListener("input", () => {
+  displayFeedback(
+    secureURL,
+    urlPlaceholder,
+    urlRegex.test(secureURL.value),
+    "Secure Web URL",
+    "e.g: https://google.com"
+  );
+})
 
 // Phone validation
 phone.addEventListener("input", () => {
