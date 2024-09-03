@@ -19,6 +19,7 @@ a {
 .spinner {
   display: none;
   position: absolute;
+  bottom: 50%;
   width: 9px;
   height: 9px;
 }
@@ -126,6 +127,25 @@ a {
   position: relative;
 }
 
+.logInSuccess {
+  position: relative;
+  padding: 0;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  gap: 2rem;
+}
+
+.logInSuccess h1 {
+  color: green;
+  text-align: center;
+  margin-bottom: 300px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+}
+
 ::-webkit-outer-spin-button,
 ::-webkit-inner-spin-button {
   display: none;
@@ -229,7 +249,8 @@ a {
   border-left: 1px solid var(--secondary-color);
 }
 
-.submit {
+.submit,
+.backToSignup {
   border: none;
   outline: none;
   background-color: var(--primary-color);

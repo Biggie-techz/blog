@@ -17,7 +17,7 @@ const confirmPassword = document.getElementById("confirmPassword");
 const confirmPasswordPlaceholder = document.getElementById(
   "confirmPasswordPlaceholder"
 );
-const submit = document.getElementById("submit");
+let submit = document.getElementById("submit");
 
 let acctObj = {};
 let account = JSON.parse(localStorage.getItem("account")) || [];
@@ -182,7 +182,8 @@ confirmPassword.addEventListener("input", () => {
 });
 
 // Submit button click event
-submit.addEventListener("click", () => {
+submit.addEventListener("click", (event) => {
+  event.preventDefault();
   const usernameExists = account.some((acc) => acc.username === username.value);
   const emailExists = account.some((acc) => acc.email === email.value);
   const phoneExists = account.some((acc) => acc.phone === phone.value);
@@ -210,34 +211,84 @@ submit.addEventListener("click", () => {
       email: email.value,
       phone: phone.value,
       password: password.value,
+      index: 0,
     };
     account.push(acctObj);
     localStorage.setItem("account", JSON.stringify(account));
-    alert("Account created successfully");
-    document.getElementById("form").style.display = "none";
-    document.getElementById("loader").style.display = "block";
+
+    // Reset input fields
+    firstName.value = "";
+    lastName.value = "";
+    username.value = "";
+    email.value = "";
+    secureURL.value = "";
+    phone.value = "";
+    password.value = "";
+    confirmPassword.value = "";
+
+    submit.innerHTML = `<div class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>`;
+    setTimeout(() => {
+      document.getElementById("form").innerHTML = `
+    <div class="spinner" id="loader">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <h1 id="accountSignupSuccessMessage">Account Created Successfully</h1>`;
+      document.getElementById("form").classList.add("signUpSuccess");
+      document.getElementById("loader").style.display = "block";
+    }, 2000);
     setTimeout(() => {
       window.location.href = "login.html";
       setTimeout(() => {
-        document.getElementById("loader").style.display = "none";
-        document.getElementById("form").style.display = "flex";
-      }, 5000);
-    }, 1500);
+        document
+          .getElementById("form")
+          .removeChild(document.getElementById("loader"));
+        document.getElementById("form").classList.remove("signUpSuccess");
+      }, 10000);
+    }, 4000);
   } else {
     alert("Please input all fields correctly");
   }
 });
 
 document.getElementById("haveAnAccount").addEventListener("click", () => {
-  document.getElementById("form").style.display = "none";
+  document.getElementById("form").innerHTML = `
+    <div class="spinner" id="loader">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>`;
   document.getElementById("loader").style.display = "block";
+  document.getElementById("form").classList.add("signUpSuccess");
   setTimeout(() => {
     window.location.href = "login.html";
     setTimeout(() => {
-      document.getElementById("loader").style.display = "none";
-      document.getElementById("form").style.display = "flex";
-    }, 5000);
-  }, 1500);
+      document
+        .getElementById("form")
+        .removeChild(document.getElementById("loader"));
+      document.getElementById("form").classList.remove("signUpSuccess");
+    }, 10000);
+  }, 2000);
+  return;
 });
 
 console.log(JSON.parse(localStorage.getItem("account")));
+
+// localStorage.clear();
