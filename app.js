@@ -23,8 +23,8 @@ let acctObj = {};
 let account = JSON.parse(localStorage.getItem("account")) || [];
 
 // Regular Expressions for validation
-const nameRegex = /^[a-zA-Z-]+$/;
-const usernameRegex = /^[a-zA-Z0-9-_]+$/;
+const nameRegex = /^[A-Za-z]+[a-zA-Z-]+[A-Za-z]+$/;
+const usernameRegex = /^[a-zA-Z_\9]+[a-zA-Z0-9-_]+[a-zA-Z\d]+$/;
 const phoneRegex = /^[0][7-9][0-1][0-9]{8}$/;
 const emailRegex = /^[a-zA-Z0-9._]+@[a-zA-Z0-9.]+\.[a-zA-Z]{2,4}$/;
 
