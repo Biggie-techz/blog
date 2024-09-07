@@ -3,18 +3,35 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard</title>
+    <title>myBlog</title>
 
-    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="dashboard.css" />
 
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
+
+    <script
+      src="https://kit.fontawesome.com/20c0ef93e7.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
     <div class="container">
+      <div class="inputBlog" id="inputBlog"></div>
       <div class="navbar">
-        <div class="left">
-          <p id="logo"></p>
+        <p class="logo">my<span>Blog</span></p>
+        <ul>
+          <li><a href="profile.html">Profile</a></li>
+          <li><a id="logOut">Log out</a></li>
+        </ul>
+      </div>
+      <div class="bottom">
+        <div id="addBlog">
+          <i class="fa-solid fa-plus"></i>
         </div>
-        <div class="right"></div>
+        <div id="preview"></div>
       </div>
     </div>
   </body>
