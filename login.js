@@ -3,7 +3,6 @@ const password = document.getElementById("password");
 const submit = document.getElementById("submit");
 const account = JSON.parse(localStorage.getItem("account")) || [];
 let timerSeconds = JSON.parse(localStorage.getItem("seconds")) || 0;
-let loggedInUser = [];
 let countdownInterval;
 
 // Display the timer if it's greater than 0
@@ -64,7 +63,7 @@ document.getElementById("dontHaveAnAccount").addEventListener("click", () => {
         <div></div>
         <div></div>
       </div>`;
-  document.getElementById("form").classList.add("logInSuccess");
+      document.getElementById("loader").style.display = "block";
   setTimeout(() => {
     window.location.href = "index.html";
   }, 2000);
@@ -121,20 +120,19 @@ function handleLoginSuccess(userAccount) {
       <h1 id="accountLogInSuccessMessage">Log in Successful</h1>`;
     document.getElementById("form").classList.add("logInSuccess");
     document.getElementById("loader").style.display = "block";
-  }, 2000);
+  }, 1500);
 
   // Reset failed attempts
   userAccount.index = 0;
   localStorage.setItem("account", JSON.stringify(account));
 
   // Log the user in
-  loggedInUser.push(userAccount);
-  localStorage.setItem("loggedInUser", JSON.stringify(loggedInUser));
+  localStorage.setItem("loggedInUser", JSON.stringify(userAccount));
 
   // Redirect to dashboard
   setTimeout(() => {
     window.location.href = "dashboard.html";
-  }, 4000);
+  }, 3000);
 }
 
 function blockAccount(userAccount) {
