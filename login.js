@@ -2,34 +2,31 @@ const username = document.getElementById("username");
 const password = document.getElementById("password");
 const submit = document.getElementById("submit");
 const account = JSON.parse(localStorage.getItem("account")) || [];
-let timerSeconds = JSON.parse(localStorage.getItem("seconds")) || 0;
 let countdownInterval;
 
-// Display the timer if it's greater than 0
-if (timerSeconds && timerSeconds > 0) {
-  startCountdown();
-} else {
-  timerSeconds = 0;
-  localStorage.removeItem("seconds");
-}
-
-console.log(account);
-
-// Handle input field events for username and password
 username.addEventListener("input", () => {
   document.getElementById("usernamePlaceholder").innerText = "Username";
   document.getElementById("usernamePlaceholder").style.color = "grey";
+  clearErrorMessage();
 });
+
 password.addEventListener("input", () => {
   document.getElementById("passwordPlaceholder").innerText = "Password";
   document.getElementById("passwordPlaceholder").style.color = "grey";
+  clearErrorMessage();
 });
 
-// Submit button event listener
 submit.addEventListener("click", () => {
-  if (timerSeconds > 0) {
-    displayBlockedMessage();
-    return; // Prevent further actions if the account is locked
+  const userAccount = account.find((obj) => obj.username === username.value);
+
+  if (!userAccount) {
+    handleInvalidUsername();
+    return;
+  }
+
+  if (userAccount.isBlocked) {
+    displayBlockedMessage(userAccount);
+    return;
   }
 
   if (username.value === "" || password.value === "") {
@@ -37,12 +34,7 @@ submit.addEventListener("click", () => {
     return;
   }
 
-  const userAccount = account.find((obj) => obj.username === username.value);
-  console.log(userAccount);
-
-  if (!userAccount) {
-    handleInvalidUsername();
-  } else if (userAccount.password !== password.value) {
+  if (userAccount.password !== password.value) {
     handleInvalidPassword(userAccount);
   } else {
     handleLoginSuccess(userAccount);
@@ -50,20 +42,7 @@ submit.addEventListener("click", () => {
 });
 
 document.getElementById("dontHaveAnAccount").addEventListener("click", () => {
-  document.getElementById("form").innerHTML = `
-    <div class="spinner" id="loader">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>`;
-      document.getElementById("loader").style.display = "block";
+  displayLoadingSpinner();
   setTimeout(() => {
     window.location.href = "index.html";
   }, 2000);
@@ -82,29 +61,124 @@ function handleInvalidPassword(userAccount) {
   document.getElementById("passwordPlaceholder").innerText = "Invalid Password";
   document.getElementById("passwordPlaceholder").style.color = "red";
 
-  // Display remaining attempts
   displayError(
     `Your account will be BLOCKED after ${
-      5 - userAccount.index
+      5 - userAccount.failedAttempts
     } more incorrect attempt(s)`
   );
 
-  // Increment index for failed attempts
-  userAccount.index++;
+  userAccount.failedAttempts = (userAccount.failedAttempts || 0) + 1;
   localStorage.setItem("account", JSON.stringify(account));
 
-  if (userAccount.index > 5) {
+  if (userAccount.failedAttempts >= 5) {
     blockAccount(userAccount);
   }
 }
 
 function handleLoginSuccess(userAccount) {
-  submit.innerHTML = `<div class="spinner-border" role="status">
-    <span class="visually-hidden">Loading...</span>
-  </div>`;
+  displayLoadingSpinner();
 
   setTimeout(() => {
-    document.getElementById("form").innerHTML = `
+    displayLoginSuccessMessage();
+
+    // Reset failed attempts
+    userAccount.failedAttempts = 0;
+    userAccount.isBlocked = false;
+    userAccount.blockTime = null;
+
+    localStorage.setItem("account", JSON.stringify(account));
+    localStorage.setItem("loggedInUser", JSON.stringify(userAccount));
+
+    setTimeout(() => {
+      window.location.href = "dashboard.html";
+    }, 3000);
+  }, 1500);
+}
+
+function blockAccount(userAccount) {
+  userAccount.isBlocked = true;
+  userAccount.blockTime = new Date().getTime();
+  localStorage.setItem("account", JSON.stringify(account));
+
+  displayBlockedMessage(userAccount);
+}
+
+function startCountdown(userAccount) {
+  const currentTime = new Date().getTime();
+  const elapsedTime = Math.floor((currentTime - userAccount.blockTime) / 1000);
+  let remainingTime = 300 - elapsedTime;
+
+  if (remainingTime <= 0) {
+    unblockAccount(userAccount);
+    return;
+  }
+
+  countdownInterval = setInterval(() => {
+    remainingTime--;
+    if (remainingTime <= 0) {
+      clearInterval(countdownInterval);
+      unblockAccount(userAccount);
+    } else {
+      if (document.getElementById("timer-message")) {
+        document.getElementById(
+          "timer-message"
+        ).innerText = `Your account has been blocked. Try again in ${remainingTime} seconds`;
+      }
+    }
+  }, 1000);
+}
+
+function unblockAccount(userAccount) {
+  userAccount.isBlocked = false;
+  userAccount.failedAttempts = 0;
+  userAccount.blockTime = null;
+  localStorage.setItem("account", JSON.stringify(account));
+
+  document.getElementById("form").innerHTML = ""; // Clear block message
+  window.location.href = "login.html";
+}
+
+function displayBlockedMessage(userAccount) {
+  const remainingTime =
+    300 - Math.floor((new Date().getTime() - userAccount.blockTime) / 1000);
+  document.getElementById("form").innerHTML = `
+    <p id="timer-message">Your account has been blocked. Try again in ${remainingTime} seconds</p>`;
+  const backToLogin = document.createElement("a");
+  backToLogin.href = "login.html";
+  backToLogin.textContent = "Back to Login";
+  backToLogin.classList.add("submit");
+  document.getElementById("form").appendChild(backToLogin);
+
+  startCountdown(userAccount);
+}
+
+function displayError(message) {
+  let errorElement = document.getElementById("error-message");
+  if (!errorElement) {
+    errorElement = document.createElement("div");
+    errorElement.id = "error-message";
+    errorElement.style.color = "red";
+    errorElement.style.marginTop = "10px";
+    password.parentNode.appendChild(errorElement);
+  }
+  errorElement.innerText = message;
+}
+
+function clearErrorMessage() {
+  const errorElement = document.getElementById("error-message");
+  if (errorElement) {
+    errorElement.remove();
+  }
+}
+
+function displayLoadingSpinner() {
+  submit.innerHTML = `<div class="spinner-border" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div>`;
+}
+
+function displayLoginSuccessMessage() {
+  document.getElementById("form").innerHTML = `
     <div class="spinner" id="loader">
         <div></div>
         <div></div>
@@ -115,82 +189,8 @@ function handleLoginSuccess(userAccount) {
         <div></div>
         <div></div>
         <div></div>
-        <div></div>
-      </div>
-      <h1 id="accountLogInSuccessMessage">Log in Successful</h1>`;
-    document.getElementById("form").classList.add("logInSuccess");
-    document.getElementById("loader").style.display = "block";
-  }, 1500);
-
-  // Reset failed attempts
-  userAccount.index = 0;
-  localStorage.setItem("account", JSON.stringify(account));
-
-  // Log the user in
-  localStorage.setItem("loggedInUser", JSON.stringify(userAccount));
-
-  // Redirect to dashboard
-  setTimeout(() => {
-    window.location.href = "dashboard.html";
-  }, 3000);
-}
-
-function blockAccount(userAccount) {
-  // Reset failed attempts
-  userAccount.index = 0;
-  localStorage.setItem("account", JSON.stringify(account));
-
-  // Start block timer
-  timerSeconds = 300;
-  localStorage.setItem("seconds", JSON.stringify(timerSeconds));
-  startCountdown();
-
-  // Display block message
-  displayBlockedMessage();
-}
-
-function startCountdown() {
-  countdownInterval = setInterval(() => {
-    timerSeconds--;
-    localStorage.setItem("seconds", JSON.stringify(timerSeconds));
-
-    // Update the timer in the UI
-    if (document.getElementById("timer-message")) {
-      document.getElementById(
-        "timer-message"
-      ).innerText = `Your account has been blocked. Try again in ${timerSeconds} seconds`;
-    }
-
-    if (timerSeconds <= 0) {
-      clearInterval(countdownInterval);
-      localStorage.removeItem("seconds");
-      document.getElementById("form").innerHTML = ""; // Clear block message
-      window.location.href = `login.html`;
-    }
-  }, 1000);
-}
-
-function displayBlockedMessage() {
-  document.getElementById("form").innerHTML = `
-    <p id="timer-message">Your account has been blocked. Try again in ${timerSeconds} seconds</p>`;
-  let backToLogin = document.createElement("a");
-  backToLogin.href = "login.html";
-  backToLogin.textContent = "Back to Login";
-  document.getElementById("form").appendChild(backToLogin);
-  backToLogin.classList.add("submit");
-}
-
-function displayError(message) {
-  const errorElement = document.getElementById("error-message");
-  if (!errorElement) {
-    const errorDiv = document.createElement("div");
-    errorDiv.id = "error-message";
-    errorDiv.style.color = "red";
-    errorDiv.style.marginTop = "10px";
-    errorDiv.innerText = message;
-    errorDiv.style.wordBreak = "break-all";
-    password.parentNode.appendChild(errorDiv);
-  } else {
-    errorElement.innerText = message;
-  }
+    </div>
+    <h1 id="accountLogInSuccessMessage">Log in Successful</h1>`;
+  document.getElementById("form").classList.add("logInSuccess");
+  document.getElementById("loader").style.display = "block";
 }
