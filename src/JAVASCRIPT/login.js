@@ -81,7 +81,7 @@ function handleInvalidPassword(userAccount) {
   userAccount.failedAttempts = (userAccount.failedAttempts || 0) + 1;
   localStorage.setItem("account", JSON.stringify(account));
 
-  if (userAccount.failedAttempts >= 5) {
+  if (userAccount.failedAttempts >= 6) {
     blockAccount(userAccount);
   }
 }
