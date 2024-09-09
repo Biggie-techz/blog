@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>myBlog</title>
+
+    <link rel="stylesheet" href="../CSS/homepage.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
+
+    <script
+      src="https://kit.fontawesome.com/20c0ef93e7.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="containerr" id="container">
+      <div class="inputBlog" id="inputBlog"></div>
+      <div class="navbar">
+        <a href="#bottom" class="logo">my<span>Blog</span></a>
+        <ul class="mainNav">
+          <li><a onclick="profile()">Profile</a></li>
+          <li><a id="logOut" onclick="logout()">Log out</a></li>
+        </ul>
+        <button class="hamburger" id="hamburger">
+          <span id="line1"></span>
+          <span id="line1"></span>
+          <span id="line1"></span>
+        </button>
+        <div class="sidebar" id="sidebar">
+          <ul>
+            <li><a onclick="profile()">Profile</a></li>
+            <li><a id="logOut" onclick="logout()">Log out</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="bottom" id="bottom">
+        <div id="addBlog">
+          <i class="fa-solid fa-plus"></i>
+        </div>
+        <div id="preview"></div>
+      </div>
+    </div>
+  </body>
+  <script src="../JAVASCRIPT/homepage.js"></script>
+</html>
