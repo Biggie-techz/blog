@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Profile</title>
+    <title>myProfile</title>
     <link rel="stylesheet" href="../CSS/profile.css" />
     <script
       src="https://kit.fontawesome.com/20c0ef93e7.js"
@@ -14,7 +14,7 @@
     <div class="containerr" id="container">
       <!-- Navbar -->
       <div class="navbar">
-        <a href="../HTML/dashboard.html" class="logo">my<span>Blog</span></a>
+        <a href="../HTML/dashboard.html" class="logo">my<span>Gram</span></a>
         <ul class="mainNav">
           <li><a onclick="homepage()">Homepage</a></li>
           <li><a id="logOut" onclick="logout()">Log out</a></li>
@@ -59,7 +59,18 @@
       </div>
 
       <!-- About Section -->
-      <div class="about" id="aboutSection"></div>
+      <div class="bottom" id="bottom">
+        <div class="bottom_header" id="bottomHeader">
+          <button id="blogsBtn">Posts</button>
+          <button id="followersBtn">Followers</button>
+          <button id="followingBtn">Following</button>
+        </div>
+        <div class="bottom_display" id="bottom_display">
+          <div class="blogs" id="blogs"></div>
+          <div class="followers" id="followers">followers</div>
+          <div class="following" id="following">following</div>
+        </div>
+      </div>
     </div>
 
     <!-- Edit User Modal -->
