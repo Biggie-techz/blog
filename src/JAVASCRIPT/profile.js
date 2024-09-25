@@ -1,7 +1,7 @@
 let user = JSON.parse(localStorage.getItem("loggedInUser"));
 let account = JSON.parse(localStorage.getItem("account"));
 let blogObj = JSON.parse(localStorage.getItem("blogData"));
-let defaultImage = "../../../asset/download-removebg-preview.png";
+let defaultImage =  "../../../asset/download-removebg-preview.png";
 console.log(blogObj);
 
 let profileImg = document.getElementById("profileImg");
@@ -24,6 +24,7 @@ if (!user) {
 function logout() {
   let confirmLogout = confirm("Are you sure you want to log out?");
   if (confirmLogout) {
+    
     container.innerHTML = `
     <div class="spinner" id="loader">
     <div></div>
@@ -110,7 +111,7 @@ function displayImage() {
     profileImg.style.backgroundSize = "cover";
     profileImg.style.backgroundPosition = "center";
     profileImg.style.backgroundRepeat = "no-repeat";
-
+    
     if (user.profileImg === defaultImage) {
       deleteLabel.style.display = "none";
     } else {
@@ -210,56 +211,7 @@ document.getElementById("hamburger").addEventListener("click", function () {
   document.getElementById("hamburger").classList.toggle("focus");
   document.getElementById("sidebar").classList.toggle("side_active");
   hero.classList.toggle("blur");
-  document.getElementById("bottom").classList.toggle("blur");
 });
 // Call displayImage and displayUsername when the page loads
 displayImage();
 displayUsername();
-
-function display() {
-  let user = JSON.parse(localStorage.getItem("loggedInUser"));
-  let account = JSON.parse(localStorage.getItem("account"));
-  let blogObj = JSON.parse(localStorage.getItem("blogData"));
-  let blogs = document.getElementById("blogs");
-
-  blogObj.reverse().forEach((acct) => {
-    if (acct.author === user.username) {
-      // Only add the image element if an image exists
-      let imageHTML = acct.image
-        ? `<img src="${acct.image}" class="blogImage"/>`
-        : "";
-
-      blogs.innerHTML += `
-      <div class="blog">
-      <div class="likes"><i class="fa-solid fa-heart"></i> <p>0 likes</p></div>
-          ${imageHTML}
-          <div class="blog_content">
-            <p class="blog_title">${acct.title}</p>
-            <p class="blog_desc">${acct.blog}</p>
-          </div>
-        </div>`;
-    }
-  }); 
-}
-
-document.getElementById("blogsBtn").addEventListener("click", function () {
-  document.getElementById("bottomHeader").classList.remove("follower");
-  document.getElementById("bottomHeader").classList.remove("following");
-  document.getElementById("bottom_display").classList.remove("following_display");
-  document.getElementById("bottom_display").classList.remove("followers_display");
-});
-
-document.getElementById("followersBtn").addEventListener("click", function () {
-  document.getElementById("bottomHeader").classList.add("follower");
-  document.getElementById("bottomHeader").classList.remove("following");
-  document.getElementById("bottom_display").classList.remove("following_display");
-  document.getElementById("bottom_display").classList.add("followers_display");
-});
-document.getElementById("followingBtn").addEventListener("click", function () {
-  document.getElementById("bottomHeader").classList.add("following");
-  document.getElementById("bottomHeader").classList.remove("follower");
-  document.getElementById("bottom_display").classList.add("following_display");
-  document.getElementById("bottom_display").classList.remove("followers_display");
-
-});
-display();

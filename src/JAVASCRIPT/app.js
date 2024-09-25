@@ -29,7 +29,7 @@ const phoneRegex = /^[0][7-9][0-1][0-9]{8}$/;
 const emailRegex = /^[a-zA-Z0-9._]+@[a-zA-Z0-9.]+\.[a-zA-Z]{2,4}$/;
 
 // https://github.com/Biggie-Techz/login
-const urlRegex = /^(https:\/\/)([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/[^\s]*)?$/;
+// const urlRegex = /^(https:\/\/)([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/[^\s]*)?$/;
 
 const passwordRegex =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.])[A-Za-z\d@$!%*?&.]{8,16}$/;
@@ -123,15 +123,15 @@ email.addEventListener("input", () => {
 });
 
 // URL validation
-secureURL.addEventListener("input", () => {
-  displayFeedback(
-    secureURL,
-    urlPlaceholder,
-    urlRegex.test(secureURL.value),
-    "Secure Web URL",
-    "e.g: https://john-smith.com"
-  );
-});
+// secureURL.addEventListener("input", () => {
+//   displayFeedback(
+//     secureURL,
+//     urlPlaceholder,
+//     urlRegex.test(secureURL.value),
+//     "Secure Web URL",
+//     "e.g: https://john-smith.com"
+//   );
+// });
 
 // Phone validation
 phone.addEventListener("input", () => {

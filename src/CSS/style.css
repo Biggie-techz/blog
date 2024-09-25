@@ -201,8 +201,12 @@
   border-left: 1px solid var(--secondary-color);
 }
 
-.passwordLabel {
-  margin-bottom: 20px;
+/* .passwordLabel {
+  margin-bottom: 30px;
+} */
+
+.passwordLabel input.input:valid {
+  margin-bottom: 32.5px;
 }
 a {
   cursor: pointer;
